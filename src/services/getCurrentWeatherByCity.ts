@@ -17,7 +17,7 @@ interface IResponse {
   current: ICurrent;
 }
 
-export interface IOutput {
+export interface ICurrentWeatherOutput {
   country: string;
   place: string;
   date: string;
@@ -27,7 +27,7 @@ export interface IOutput {
   icon: string;
 }
 
-const responseConverter = (response: IResponse): IOutput => {
+const responseConverter = (response: IResponse): ICurrentWeatherOutput => {
   const {location, current} = response;
   const {country, name, localtime} = location;
   const {condition, temp_c, is_day} = current;
@@ -47,8 +47,11 @@ export const getCurrentWeatherByCity = async (city: string) => {
   try {
     const response = await fetch(`${API_CURRENT_URL}&q=${city}`);
     const json = await response.json();
+    if (json?.error) {
+      return json.error;
+    }
     return responseConverter(json);
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };

@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
 import townReducer from './slices/homeTownSlice';
+import daysReducer from './slices/forecastDaysSlice.ts';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
     town: townReducer,
+    days: daysReducer,
   },
 });
 
